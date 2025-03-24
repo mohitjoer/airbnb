@@ -2,7 +2,29 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "mongoose": "^8.12.2"
-  }
+    "mongoose": "^8.12.2",
+    "nodemon": "^3.1.9"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "name": "copy",
+  "version": "1.0.0",
+  "description": "a copy of airbnb made by me ",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohitjoer/airbnb.git"
+  },
+  "keywords": [
+    "airbnb",
+    "copy"
+  ],
+  "author": "mohit joe .r",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohitjoer/airbnb/issues"
+  },
+  "homepage": "https://github.com/mohitjoer/airbnb#readme"
 }
-

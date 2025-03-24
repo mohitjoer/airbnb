@@ -18,21 +18,11 @@ async function main() {
 }
 
 
-app.get('/',async (req,res)=>{
-    let sampletesting = new listing({
-        title:"my new villa",
-        discription:"by the beach",
-        price:1200,
-        location:"goa",
-        country:"india",
-    })
-    await sampletesting.save()
-    .then(()=>{
-        console.log("saved");
-    }).catch(err=>{
-        console.log(err);
+app.get('/listings',(req,res)=>{
+    listing.find({}).then(res=>{
+       console.log(res);
     });
-    res.send("successful");
+    
 });
 
 app.listen(PORT, () => {
