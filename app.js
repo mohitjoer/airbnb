@@ -4,6 +4,11 @@ const PORT = 3000;
 
 const mongoose =require('mongoose');
 const listing = require("./models/listing.js")
+const path = require("path");
+
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 const mongo_url = 'mongodb://127.0.0.1:27017/wanderl';
 main()
@@ -17,11 +22,10 @@ async function main() {
     await mongoose.connect(mongo_url);
 }
 
-
-app.get('/listings',(req,res)=>{
-    listing.find({}).then(res=>{
-       console.log(res);
-    });
+//listing page for property\/
+app.get('/listings',async(req,res)=>{
+    const list = await listing.find({});
+    res.render('listing.ejs',{list});
     
 });
 
