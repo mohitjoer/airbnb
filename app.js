@@ -5,6 +5,7 @@ const PORT = 3000;
 const mongoose = require('mongoose');
 const listing = require("./models/listing.js")
 const path = require("path");
+const ejsmate = require("ejs-mate");
 
 const methodOverride = require("method-override");
 
