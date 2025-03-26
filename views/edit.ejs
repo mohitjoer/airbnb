@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cairbnb</title>
+</head>
+<body>
+    <h3>Edit details :</h3>
+    <form method="post" action="/listings">
+        <input  name="list[title]" type="text" value="<%= list.title %>">
+        <br></br>
+        <textarea name="list[description]" value="<%= list.discription %>"></textarea>
+        <br></br>
+        <input  name="list[image]" type="text" value="<%= list.image %>">
+        <br></br>
+        <input name="list[price]"  type="number" value="<%= list.price %>">
+        <br></br>
+        <input  name="list[country]" type="text" value="<%= list.country %>">
+        <br></br>
+        <input  name="list[location]" type="text" value="<%= list.title %>">
+        <br></br>
+        <button>add</button>
+    </form>
+    
+</body>
+</html>

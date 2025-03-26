@@ -47,8 +47,10 @@ app.post("/listings",async( req,res)=>{
 });
 
 // edit the property details
-app.post('/listings/:id/edit',(req,res)=>{
-
+app.get('/listings/:id/edit',async (req,res)=>{
+    let {id}=req.params;
+    const list = await listing.findById(id);
+    res.render('edit.ejs',{list});
 });
 
 
