@@ -6,9 +6,12 @@ const mongoose = require('mongoose');
 const listing = require("./models/listing.js")
 const path = require("path");
 
+const methodOverride = require("method-override");
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
 
 const mongo_url = 'mongodb://127.0.0.1:27017/cairbnb';
 main()
@@ -53,6 +56,18 @@ app.get('/listings/:id/edit',async (req,res)=>{
     res.render('edit.ejs',{list});
 });
 
+app.put("/listings/:id", async(req,res)=>{
+    let {id}=req.params;
+    await listing.findByIdAndUpdate(id,{...req.body.list});
+    res.redirect(`/listings/${id}`);
+});
+
+app.delete("/listings/:id",async(req,res)=>{
+    let {id}= req.params;
+    let deleteprop = await listing.findByIdAndDelete(id);
+    console.log(deleteprop);
+    res.redirect("/listings");
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
