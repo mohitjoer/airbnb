@@ -29,19 +29,19 @@ async function main() {
 // list page for property
 app.get('/listings', async(req,res) => {
     const list = await listing.find({});
-    res.render('listing.ejs', {list});
+    res.render('listings/listing.ejs', {list});
 });
 
 // create new property 
 app.get('/listings/new', async (req,res) => {
-    res.render("new.ejs");
+    res.render("listings/new.ejs");
 });
 
 // page for single property
 app.get("/listings/:id", async(req,res) => {
     let {id} = req.params;
     const list = await listing.findById(id);
-    res.render("show.ejs", {list});
+    res.render("listings/show.ejs", {list});
 });
 
 app.post("/listings",async( req,res)=>{
@@ -54,7 +54,7 @@ app.post("/listings",async( req,res)=>{
 app.get('/listings/:id/edit',async (req,res)=>{
     let {id}=req.params;
     const list = await listing.findById(id);
-    res.render('edit.ejs',{list});
+    res.render('listings/edit.ejs',{list});
 });
 
 app.put("/listings/:id", async(req,res)=>{
