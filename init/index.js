@@ -20,8 +20,6 @@ const initdb = async () =>{
     await listing.insertMany(initdata.data);
     console.log("data was initialized");
     console.log(initdata.data);
-    
-
 };
 
 initdb();
