@@ -2,10 +2,9 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-const mongoose =require('mongoose');
+const mongoose = require('mongoose');
 const listing = require("./models/listing.js")
 const path = require("path");
-
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,26 +22,23 @@ async function main() {
     await mongoose.connect(mongo_url);
 }
 
-//listing page for property\/
-app.get('/listings',async(req,res)=>{
+// list page for property
+app.get('/listings', async(req,res) => {
     const list = await listing.find({});
-    res.render('listing.ejs',{list});
-    
+    res.render('listing.ejs', {list});
 });
 
-// creating new property for page \/
-app.get('/listing/new', async (req,res)=>{
+// create new property 
+app.get('/listings/new', async (req,res) => {
     res.render("new.ejs");
 });
 
-//page for property\/
-app.get("/listings/:id", async(req,res)=>{
-    let{id}= req.params;
+// page for single property
+app.get("/listings/:id", async(req,res) => {
+    let {id} = req.params;
     const list = await listing.findById(id);
-    res.render("show.ejs",{list});
+    res.render("show.ejs", {list});
 });
-
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
