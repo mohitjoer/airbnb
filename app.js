@@ -30,6 +30,11 @@ app.get('/listings',async(req,res)=>{
     
 });
 
+// creating new property for page \/
+app.get('/listing/new', async (req,res)=>{
+    res.render("new.ejs");
+});
+
 //page for property\/
 app.get("/listings/:id", async(req,res)=>{
     let{id}= req.params;
@@ -37,10 +42,7 @@ app.get("/listings/:id", async(req,res)=>{
     res.render("show.ejs",{list});
 });
 
-// creating new property for page \/
-app.get('/listing/new', async (req,res)=>{
-    
-})
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
