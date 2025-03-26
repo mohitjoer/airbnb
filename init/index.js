@@ -3,7 +3,7 @@ const initdata = require("./data.js");
 const listing = require("../models/listing.js");
 
 
-const mongo_url = 'mongodb://127.0.0.1:27017/wanderl';
+const mongo_url = 'mongodb://127.0.0.1:27017/cairbnb';
 main()
 .then(()=>{
     console.log("connected to DB");
@@ -19,6 +19,8 @@ const initdb = async () =>{
     await listing.deleteMany({});
     await listing.insertMany(initdata.data);
     console.log("data was initialized");
+    console.log(initdata.data);
+    
 
 };
 

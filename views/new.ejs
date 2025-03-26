@@ -6,19 +6,21 @@
     <title>cairbnb</title>
 </head>
 <body>
-    <h3>Post new property</h3>
+    <h3>Post new property:</h3>
     <form method="post" action="/listings">
-        <input type="text" name="title" placeholder="enter title">
-        <br>
-        <textarea name="description" placeholder="enter description"></textarea>
-        <br>
-        <input type="text" name="image" placeholder="enter image url">
-        <br>
-        <input name="price"  type="number" placeholder="enter price">
-        <br>
-        <input  name="country" type="text" placeholder="enter country name">
-        <br>
-        <input  name="location" type="text" placeholder="enter location">
+        <input  name="list[title]" type="text" placeholder="enter title">
+        <br></br>
+        <textarea name="list[description]" placeholder="enter description"></textarea>
+        <br></br>
+        <input  name="list[image]" type="text" placeholder="enter image url">
+        <br></br>
+        <input name="list[price]"  type="number" placeholder="enter price">
+        <br></br>
+        <input  name="list[country]" type="text" placeholder="enter country name">
+        <br></br>
+        <input  name="list[location]" type="text" placeholder="enter location">
+        <br></br>
+        <button>add</button>
     </form>
 </body>
 </html>

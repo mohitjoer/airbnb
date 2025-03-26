@@ -10,7 +10,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}));
 
-const mongo_url = 'mongodb://127.0.0.1:27017/wanderl';
+const mongo_url = 'mongodb://127.0.0.1:27017/cairbnb';
 main()
 .then(()=>{
     console.log("connected to DB");
@@ -39,6 +39,18 @@ app.get("/listings/:id", async(req,res) => {
     const list = await listing.findById(id);
     res.render("show.ejs", {list});
 });
+
+app.post("/listings",async( req,res)=>{
+    let list = new listing(req.body.list);
+    await list.save();
+    res.redirect("/listings");
+});
+
+// edit the property details
+app.post('/listings/:id/edit',(req,res)=>{
+
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);

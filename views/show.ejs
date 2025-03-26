@@ -13,6 +13,8 @@
         <li>$<%= list.price.toLocaleString("en-US") %></li>
         <li><%= list.location %></li>
         <li><%= list.country %></li>
+
+        <a href="/listings/<%= list._id %>/edit"><button>edit these details</button></a>
     </ul>
 </body>
 </html>
