@@ -30,11 +30,17 @@ app.get('/listings',async(req,res)=>{
     
 });
 
+//page for property\/
 app.get("/listings/:id", async(req,res)=>{
     let{id}= req.params;
     const list = await listing.findById(id);
     res.render("show.ejs",{list});
 });
+
+// creating new property for page \/
+app.get('/listing/new', async (req,res)=>{
+    
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);

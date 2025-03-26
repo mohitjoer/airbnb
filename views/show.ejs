@@ -10,7 +10,7 @@
     <ul>
         <li><%= list.title %></li>
         <li><%= list.description %></li>
-        <li><%= list.price %></li>
+        <li>$<%= list.price.toLocaleString("en-US") %></li>
         <li><%= list.location %></li>
         <li><%= list.country %></li>
     </ul>
