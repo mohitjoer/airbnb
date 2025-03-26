@@ -9,6 +9,7 @@ const path = require("path");
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(express.urlencoded({extended:true}));
 
 const mongo_url = 'mongodb://127.0.0.1:27017/wanderl';
 main()
@@ -27,6 +28,12 @@ app.get('/listings',async(req,res)=>{
     const list = await listing.find({});
     res.render('listing.ejs',{list});
     
+});
+
+app.get("/listings/:id", async(req,res)=>{
+    let{id}= req.params;
+    const list = await listing.findById(id);
+    res.render("show.ejs",{list});
 });
 
 app.listen(PORT, () => {
