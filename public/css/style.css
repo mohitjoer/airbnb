@@ -12,3 +12,35 @@
     color: rgb(41, 40, 40) !important;
     font-weight: 600  !important;
 }
+
+
+/*footer*/
+
+.f-info-links a{
+    text-decoration: none;
+    color: black;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info-links{
+    width: 100%;
+}
+
+.f-info-socials{
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+
+.f-info{
+    text-align: center;
+    height: 8rem;
+    background-color: rgb(168, 165, 165);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
