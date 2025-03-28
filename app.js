@@ -29,6 +29,10 @@ async function main() {
     await mongoose.connect(mongo_url);
 }
 
+app.get("/",(req,res)=>{
+    res.render("listings/home.ejs");
+});
+
 // list page for property
 app.get('/listings', async(req,res) => {
     const list = await listing.find({});
