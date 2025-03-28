@@ -18,7 +18,7 @@ body{
 }
 
 .fa-house-chimney{
-    color: rgb(246, 132, 132);
+    color:   rgb(236, 82, 82);
     font-size: 2rem;
 }
 
@@ -90,13 +90,28 @@ body{
 
 
 .add-btn{
-    background-color:  rgb(246, 132, 132) !important;
+    background-color:    rgb(236, 82, 82)!important;
     border:none !important;
 }
 
 /* edit page*/
 
 .edit-btn{
-    background-color:  rgb(246, 132, 132) !important;
+    background-color:  rgb(236, 82, 82) !important;
+    width: 8rem !important;
     border:none !important;
+}
+
+/* show page*/
+.show-card {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.show-img{
+    height: 30vh;
+}
+
+.btns{
+    display: flex;
 }
