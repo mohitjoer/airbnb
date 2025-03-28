@@ -68,7 +68,7 @@ body{
     padding: 0 !important;
 }
 
-.card-text{
+.row a {
     text-decoration: none ;
 }
 
