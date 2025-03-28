@@ -1,20 +1,41 @@
 <% layout('layout/boilerplate') %>
 <body>
-    <h3>Post new property:</h3>
-    <form method="post" action="/listings">
-        <input  name="list[title]" type="text" placeholder="enter title">
-        <br></br>
-        <textarea name="list[description]" placeholder="enter description"></textarea>
-        <br></br>
-        <input  name="list[image]" type="text" placeholder="enter image url">
-        <br></br>
-        <input name="list[price]"  type="number" placeholder="enter price">
-        <br></br>
-        <input  name="list[country]" type="text" placeholder="enter country name">
-        <br></br>
-        <input  name="list[location]" type="text" placeholder="enter location">
-        <br></br>
-        <button>add</button>
-    </form>
-    <a href="/listings"><button>go back</button></a>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <h3>Post new property:</h3>
+            <br>
+            <form method="post" action="/listings">
+                <div class="mb-3"> 
+                    <label for="Title" class="form-label">Title</label>
+                    <input  name="list[title]" type="text" placeholder="Enter Title" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea name="list[description]" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="Image" class="form-label">Image URL</label>
+                    <input  name="list[image]" type="text" placeholder="Enter Image URL" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Price" class="form-label">Price</label>
+                    <input name="list[price]"  type="number" placeholder="Enter Price" class="form-control">
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="Country" class="form-label">Country</label>
+                        <input  name="list[country]" type="text" placeholder="Enter Country" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-8">
+                        <label for="Location" class="form-label">Location</label>
+                        <input  name="list[location]" type="text" placeholder="Enter Location" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-dark add-btn" >add</button>
+                
+            </form>
+            <br>
+        </div>
+    </div>
 </body>
