@@ -10,7 +10,7 @@
   "scripts": {
     "start": "nodemon app.js"
   },
-  "name": "copy",
+  "name": "copy of airbnb",
   "version": "1.0.0",
   "description": "a copy of airbnb made by me ",
   "main": "app.js",
