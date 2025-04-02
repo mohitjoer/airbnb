@@ -10,6 +10,7 @@ const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ejs = require("ejs");
 const ExpressError = require("./utils/ExpressError.js");
+const { listingSchema } = require("./schema.js");
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -55,9 +56,8 @@ app.get("/listings/:id",wrapAsync( async (req, res, next) => {
 
 //new property
 app.post("/listings", wrapAsync(async (req, res, next) => {
-    if (!req.body.list) {
-        throw new ExpressError(400,"Invalid Property Data");
-    }
+    let result = listingSchema.validate(req.body);
+    console.log(result);
     const list = new listing(req.body.list);
     await list.save();
     res.redirect("/listings");
