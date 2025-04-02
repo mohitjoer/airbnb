@@ -85,7 +85,14 @@ app.delete("/listings/:id",wrapAsync( async (req, res, next) => {
     res.redirect("/listings");
 }));
 
+app.all("*", (req , res , next) => {
+    next(new ExpressError(404,"Page Not Found"));
+});
 
+app.use((err , req , res , next) => {
+    let {statuscode ,message} = err;
+    res.status(statuscode).send(message);
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
