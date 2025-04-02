@@ -55,14 +55,17 @@ app.get("/listings/:id",wrapAsync( async (req, res, next) => {
 
 //new property
 app.post("/listings", wrapAsync(async (req, res, next) => {
-        let list = new listing(req.body.list);
-        await list.save();
-        res.redirect("/listings");
+    if (!req.body.list) {
+        throw new ExpressError(400,"Invalid Property Data");
+    }
+    const list = new listing(req.body.list);
+    await list.save();
+    res.redirect("/listings");
 }));
 
 // Edit property 
 app.get('/listings/:id/edit',wrapAsync( async (req, res, next) => {
-    let { id } = req.params;
+    const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return next();
     const list = await listing.findById(id);
     if (!list) return next();
@@ -71,8 +74,10 @@ app.get('/listings/:id/edit',wrapAsync( async (req, res, next) => {
 
 
 app.put("/listings/:id",wrapAsync( async (req, res, next) => {
+    if (!req.body.list) {
+        throw new ExpressError(400,"Invalid Property Data");
+    }
     let { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return next();
     await listing.findByIdAndUpdate(id, { ...req.body.list });
     res.redirect(`/listings/${id}`);
 }));
@@ -90,8 +95,8 @@ app.all("*", (req , res , next) => {
 });
 
 app.use((err , req , res , next) => {
-    let {statuscode ,message} = err;
-    res.status(statuscode).send(message);
+    let {statuscode=500 ,message=`something went wrong !!!`} = err;
+    res.status(statuscode).render("listings/error.ejs", {err});
 });
 
 app.listen(PORT, () => {
