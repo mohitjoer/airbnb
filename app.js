@@ -34,6 +34,15 @@ app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
 
+const validateListing = (req, res, next) => {
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        throw new ExpressError( 400 ,  result.error);
+    } else {
+        next();
+    }
+};
+
 // List properties
 app.get('/listings',wrapAsync( async (req, res, next) => {
         const list = await listing.find({});
@@ -55,16 +64,15 @@ app.get("/listings/:id",wrapAsync( async (req, res, next) => {
 }));
 
 //new property
-app.post("/listings", wrapAsync(async (req, res, next) => {
-    let result = listingSchema.validate(req.body);
-    console.log(result);
+app.post("/listings",validateListing, wrapAsync(async (req, res, next) => {
+
     const list = new listing(req.body.list);
     await list.save();
     res.redirect("/listings");
 }));
 
 // Edit property 
-app.get('/listings/:id/edit',wrapAsync( async (req, res, next) => {
+app.get('/listings/:id/edit',validateListing,wrapAsync( async (req, res, next) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return next();
     const list = await listing.findById(id);

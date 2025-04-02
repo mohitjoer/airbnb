@@ -9,7 +9,7 @@
     "nodemon": "^3.1.9"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "npx nodemon app.js"
   },
   "name": "copy-of-airbnb",
   "version": "1.0.0",
