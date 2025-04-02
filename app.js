@@ -3,79 +3,89 @@ const app = express();
 const PORT = 3000;
 
 const mongoose = require('mongoose');
-const listing = require("./models/listing.js")
+const listing = require("./models/listing.js");
 const path = require("path");
 const ejsmate = require("ejs-mate");
-
 const methodOverride = require("method-override");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ejs = require("ejs");
+const ExpressError = require("./utils/ExpressError.js");
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname,"/public")));
+app.use(express.static(path.join(__dirname, "/public")));
 
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs', ejsmate);
 
 const mongo_url = 'mongodb://127.0.0.1:27017/cairbnb';
 main()
-.then(()=>{
-    console.log("connected to DB");
-}).catch(err=>{
-    console.log(err);
-});
+    .then(() => console.log("Connected to DB"))
+    .catch(err => console.log(err));
 
 async function main() {
     await mongoose.connect(mongo_url);
 }
 
-app.get("/",(req,res)=>{
+
+app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
 
-// list page for property
-app.get('/listings', async(req,res) => {
-    const list = await listing.find({});
-    res.render('listings/listing.ejs', {list});
-});
+// List properties
+app.get('/listings',wrapAsync( async (req, res, next) => {
+        const list = await listing.find({});
+        res.render('listings/listing.ejs', { list });
+}));
 
-// create new property 
-app.get('/listings/new', async (req,res) => {
+//new property 
+app.get('/listings/new', (req, res) => {
     res.render("listings/new.ejs");
 });
 
-// page for single property
-app.get("/listings/:id", async(req,res) => {
-    let {id} = req.params;
+// show property
+app.get("/listings/:id",wrapAsync( async (req, res, next) => {
+    let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return next(); 
     const list = await listing.findById(id);
-    res.render("listings/show.ejs", {list});
-});
+    if (!list) return next(); 
+    res.render("listings/show.ejs", { list });
+}));
 
-app.post("/listings",async( req,res)=>{
-    let list = new listing(req.body.list);
-    await list.save();
-    res.redirect("/listings");
-});
+//new property
+app.post("/listings", wrapAsync(async (req, res, next) => {
+        let list = new listing(req.body.list);
+        await list.save();
+        res.redirect("/listings");
+}));
 
-// edit the property details
-app.get('/listings/:id/edit',async (req,res)=>{
-    let {id}=req.params;
+// Edit property 
+app.get('/listings/:id/edit',wrapAsync( async (req, res, next) => {
+    let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return next();
     const list = await listing.findById(id);
-    res.render('listings/edit.ejs',{list});
-});
+    if (!list) return next();
+    res.render('listings/edit.ejs', { list });
+}));
 
-app.put("/listings/:id", async(req,res)=>{
-    let {id}=req.params;
-    await listing.findByIdAndUpdate(id,{...req.body.list});
+
+app.put("/listings/:id",wrapAsync( async (req, res, next) => {
+    let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return next();
+    await listing.findByIdAndUpdate(id, { ...req.body.list });
     res.redirect(`/listings/${id}`);
-});
+}));
 
-app.delete("/listings/:id",async(req,res)=>{
-    let {id}= req.params;
-    let deleteprop = await listing.findByIdAndDelete(id);
-    console.log(deleteprop);
+// Delete property
+app.delete("/listings/:id",wrapAsync( async (req, res, next) => {
+    let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return next();
+    await listing.findByIdAndDelete(id);
     res.redirect("/listings");
-});
+}));
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
