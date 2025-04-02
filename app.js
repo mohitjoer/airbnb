@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 const validateListing = (req, res, next) => {
     const { error } = listingSchema.validate(req.body);
     if (error) {
+        console.log(error);
         throw new ExpressError( 400 ,  result.error);
     } else {
         next();
@@ -65,8 +66,7 @@ app.get("/listings/:id",wrapAsync( async (req, res, next) => {
 
 //new property
 app.post("/listings",validateListing, wrapAsync(async (req, res, next) => {
-
-    const list = new listing(req.body.list);
+    const list = new listing(req.body.listing);
     await list.save();
     res.redirect("/listings");
 }));
