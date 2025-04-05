@@ -12,7 +12,7 @@ const listingschema =new schema({
             },
         image: {
                 type: String,
-                default: 'https://images.unsplash.com/photo-1742657914528-31c194363a16?q=80&w=709&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                default: 'https://imgs.search.brave.com/PXJ2T2QhlhLfddhKG6GEerhtS-H2vqaVKWEK5mrL3jA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNDc0/OTY2NzcxL3Bob3Rv/L3NlYXNjYXBlLWFu/ZC1zdW4tb24tYmx1/ZS1za3kuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPXdlUldN/emZySlpJZDlvREdW/Z2Vqb1NjMGN5Snp5/WFZpV0FLdUdGc2R6/dTA9'
             },
         price: {
                 type: Number,
