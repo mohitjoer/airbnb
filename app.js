@@ -125,6 +125,15 @@ app.post('/listings/:id/reviews', validateReview , wrapAsync(async (req, res, ne
     res.redirect(`/listings/${req.params.id}`);
 }));
 
+// delete review 
+app.delete('/listings/:id/reviews/:reviewId', wrapAsync(async (req, res, next) => {
+    const {id , reviewId} = req.params;
+    await listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+
+    res.redirect(`/listings/${id}`);
+}));
+
 // error handelers
 app.all("*", (req, res, next) => {
     next(new ExpressError("Page Not Found", 404));
