@@ -12,6 +12,7 @@ const ejs = require("ejs");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema , reviewSchema  } = require("./schema.js");
 const Review = require('./models/review.js');
+const listings = require('./routes/listing.js');
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -36,15 +37,7 @@ app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
 
-const validateListing = (req, res, next) => {
-    const { error } = listingSchema.validate(req.body);
-    if (error) {
-        console.log(error);
-        throw new ExpressError( 400 ,  result.error);
-    } else {
-        next();
-    }
-};
+
 
 const validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
@@ -56,60 +49,7 @@ const validateReview = (req, res, next) => {
     }
 };
 
-
-// List properties
-app.get('/listings',wrapAsync( async (req, res, next) => {
-        const list = await listing.find({});
-        res.render('listings/listing.ejs', { list });
-}));
-
-//new property 
-app.get('/listings/new', (req, res) => {
-    res.render("listings/new.ejs");
-});
-
-// show property
-app.get("/listings/:id",wrapAsync( async (req, res, next) => {
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return next(); 
-    const list = await listing.findById(id).populate("reviews");
-    if (!list) return next(); 
-    res.render("listings/show.ejs", { list });
-}));
-
-//new property
-app.post("/listings",validateListing, wrapAsync(async (req, res, next) => {
-    const list = new listing(req.body.listing);
-    await list.save();
-    res.redirect("/listings");
-}));
-
-// Edit property 
-app.get('/listings/:id/edit',validateListing,wrapAsync( async (req, res, next) => {
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return next();
-    const list = await listing.findById(id);
-    if (!list) return next();
-    res.render('listings/edit.ejs', { list });
-}));
-
-
-app.put("/listings/:id",wrapAsync( async (req, res, next) => {
-    if (!req.body.list) {
-        throw new ExpressError(400,"Invalid Property Data");
-    }
-    let { id } = req.params;
-    await listing.findByIdAndUpdate(id, { ...req.body.list });
-    res.redirect(`/listings/${id}`);
-}));
-
-// Delete property
-app.delete("/listings/:id",wrapAsync( async (req, res, next) => {
-    let { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return next();
-    await listing.findByIdAndDelete(id);
-    res.redirect("/listings");
-}));
+app.use("/listings", listings);
 
 
 // review for property
