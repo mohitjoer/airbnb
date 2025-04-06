@@ -72,7 +72,7 @@ app.get('/listings/new', (req, res) => {
 app.get("/listings/:id",wrapAsync( async (req, res, next) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return next(); 
-    const list = await listing.findById(id);
+    const list = await listing.findById(id).populate("reviews");
     if (!list) return next(); 
     res.render("listings/show.ejs", { list });
 }));
