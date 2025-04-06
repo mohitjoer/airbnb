@@ -10,8 +10,9 @@ const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ejs = require("ejs");
 const ExpressError = require("./utils/ExpressError.js");
-const { listingSchema } = require("./schema.js");
+const { listingSchema , reviewSchema  } = require("./schema.js");
 const Review = require('./models/review.js');
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -44,6 +45,17 @@ const validateListing = (req, res, next) => {
         next();
     }
 };
+
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        console.log(error);
+        throw new ExpressError( 400 ,  result.error);
+    } else {
+        next();
+    }
+};
+
 
 // List properties
 app.get('/listings',wrapAsync( async (req, res, next) => {
@@ -101,7 +113,7 @@ app.delete("/listings/:id",wrapAsync( async (req, res, next) => {
 
 
 // review for property
-app.post('/listings/:id/reviews', wrapAsync(async (req, res, next) => {
+app.post('/listings/:id/reviews', validateReview , wrapAsync(async (req, res, next) => {
     const page = await listing.findById(req.params.id);
     if (!page) {
         throw new ExpressError("Listing not found", 404);
