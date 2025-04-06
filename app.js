@@ -58,7 +58,7 @@ app.get('/listings/new', (req, res) => {
 
 // show property
 app.get("/listings/:id",wrapAsync( async (req, res, next) => {
-    let { id } = req.params;
+    const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return next(); 
     const list = await listing.findById(id);
     if (!list) return next(); 
