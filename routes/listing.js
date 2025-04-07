@@ -13,7 +13,7 @@ const validateListing = (req, res, next) => {
     const { error } = listingSchema.validate(req.body);
     if (error) {
         console.log(error);
-        throw new ExpressError( 400 ,  result.error);
+        throw new ExpressError(error.details[0].message, 400); 
     } else {
         next();
     }
@@ -50,7 +50,7 @@ router.post("/",validateListing, wrapAsync(async (req, res, next) => {
 }));
 
 // Edit property 
-router.get('/:id/edit',validateListing,wrapAsync( async (req, res, next) => {
+router.get('/:id/edit', wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return next();
     const list = await listing.findById(id);
@@ -58,13 +58,13 @@ router.get('/:id/edit',validateListing,wrapAsync( async (req, res, next) => {
     res.render('listings/edit.ejs', { list });
 }));
 
-
-router.put("/:id",wrapAsync( async (req, res, next) => {
-    if (!req.body.list) {
-        throw new ExpressError(400,"Invalid Property Data");
+// Update property
+router.put("/:id", validateListing, wrapAsync(async (req, res, next) => {
+    if (!req.body.listing) {
+        throw new ExpressError("Invalid Property Data", 400);
     }
-    let { id } = req.params;
-    await listing.findByIdAndUpdate(id, { ...req.body.list });
+    const { id } = req.params;
+    await listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect(`/listings/${id}`);
 }));
 

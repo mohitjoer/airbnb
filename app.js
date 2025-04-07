@@ -19,6 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs', ejsmate);
 
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+    next();
+});
+
 const mongo_url = 'mongodb://127.0.0.1:27017/cairbnb';
 main()
     .then(() => console.log("Connected to DB"))
@@ -28,6 +33,14 @@ async function main() {
     await mongoose.connect(mongo_url);
 }
 
+const validateListing = (req, res, next) => {
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        console.log(error);
+        throw new ExpressError(error.details[0].message, 400);
+        next();
+    }
+};
 
 app.get("/", (req, res) => {
     res.render("listings/home.ejs");
@@ -38,7 +51,10 @@ app.get("/", (req, res) => {
 
 app.use("/listings", listings);
 
-app.use("/listings/:id/reviews",reviews );
+app.use("/listings/:id/reviews", reviews);
+
+
+
 
 // error handelers
 app.all("*", (req, res, next) => {
