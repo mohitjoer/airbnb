@@ -19,11 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs', ejsmate);
 
-app.use((req, res, next) => {
-    console.log(`Incoming request: ${req.method} ${req.url}`);
-    next();
-});
-
 const mongo_url = 'mongodb://127.0.0.1:27017/cairbnb';
 main()
     .then(() => console.log("Connected to DB"))

@@ -1,15 +1,16 @@
 # Cairbnb – An Airbnb Clone
 
-Cairbnb is a full-stack web application that replicates the Airbnb experience. Built using Node.js, Express, MongoDB, and Bootstrap, Cairbnb provides a modern, responsive interface for users to browse, add, edit, and delete property listings.
+Cairbnb is a full-stack web application that replicates the Airbnb experience. Built using Node.js, Express, MongoDB, and Bootstrap, Cairbnb provides a modern, responsive interface for users to browse, add, edit, delete property listings, and leave reviews.
 
 ## Features
 
 - **Dynamic Property Listings:** Browse a wide variety of properties complete with images, descriptions, and pricing details.
 - **CRUD Functionality:** Full Create, Read, Update, and Delete support for managing property listings.
+- **Review System:** Add, view, and delete reviews for each property.
 - **Responsive Design:** Mobile-first design built with Bootstrap 5 and custom CSS for a seamless experience on any device.
 - **MVC Architecture:** Clean separation of concerns using the Model-View-Controller pattern.
 - **Templating with EJS:** Efficient view rendering using EJS and EJS-Mate for layouts and reusable components.
-- **Database Integration:** Uses MongoDB with Mongoose ODM to manage property data.
+- **Database Integration:** Uses MongoDB with Mongoose ODM to manage property and review data.
 
 ## Tech Stack
 
@@ -83,7 +84,8 @@ Cairbnb is a full-stack web application that replicates the Airbnb experience. B
 airbnb/
 ├── app.js                   # Main Express application file
 ├── models/
-│   └── listing.js           # Mongoose schema and model for property listings
+│   ├── listing.js           # Mongoose schema and model for property listings
+│   └── review.js            # Mongoose schema and model for reviews
 ├── views/
 │   ├── includes/            # Reusable UI components
 │   │   ├── navbar.ejs       # Navigation bar (header)
@@ -97,11 +99,20 @@ airbnb/
 │       ├── show.ejs         # Detailed view of a single property
 │       └── edit.ejs         # Form for editing a listing
 ├── public/
-│   └── css/
-│       └── style.css        # Custom CSS for styling Cairbnb
-└── init/
-    ├── data.js              # Sample listings data for seeding the database
-    └── index.js             # Database seeding script
+│   ├── css/
+│   │   └── style.css        # Custom CSS for styling Cairbnb
+│   └── js/
+│       └── script.js        # Client-side JavaScript for form validation
+├── routes/
+│   ├── listing.js           # Routes for property listings
+│   └── review.js            # Routes for reviews
+├── utils/
+│   ├── ExpressError.js      # Custom error class for handling errors
+│   └── wrapAsync.js         # Utility for wrapping async route handlers
+├── init/
+│   ├── data.js              # Sample listings data for seeding the database
+│   └── index.js             # Database seeding script
+└── schema.js                # Joi validation schemas for listings and reviews
 ```
 
 ## Usage
@@ -110,11 +121,16 @@ airbnb/
 - **Browse Listings:** Click “All listing” in the navbar to view every property available.
 - **Add New Listing:** Use the “Add new listing” option to create a new property entry.
 - **Manage Listings:** From a listing's detailed view, you can edit or delete the property.
+- **Add Reviews:** Submit reviews for properties, including a rating and comment.
+- **Delete Reviews:** Remove reviews from properties.
 
 ## Code Highlights
 
 ### Mongoose Model (`models/listing.js`)
-Defines the schema for a property listing with required fields such as title, description, price, location, and country. An image field includes a default URL to ensure a placeholder is always displayed.
+Defines the schema for a property listing with required fields such as title, description, price, location, and country. An image field includes a default URL to ensure a placeholder is always displayed. The `reviews` field stores references to `Review` documents.
+
+### Review System (`routes/review.js`)
+Handles adding and deleting reviews for properties. Reviews are validated using Joi and stored as references in the `reviews` array of the corresponding listing.
 
 ### Seed Script (`init/index.js`)
 Clears the existing listings and inserts sample data from `data.js` to quickly populate your database for testing or demo purposes.
@@ -142,6 +158,3 @@ Mohit Joe .R
 
 - Inspired by Airbnb’s design and user experience.
 - Property images are sourced from [Unsplash](https://unsplash.com).
-```
-
-You can save the above content in a file named `README.md` in your project directory.

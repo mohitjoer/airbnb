@@ -19,7 +19,6 @@ const validateReview = (req, res, next) => {
 
 // Add a review
 router.post('/', validateReview, wrapAsync(async (req, res, next) => {
-    console.log(`Incoming request to add review for listing ID: ${req.params.id}`);
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new ExpressError("Invalid Listing ID", 400);
