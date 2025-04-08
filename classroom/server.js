@@ -6,10 +6,11 @@ const PORT = 3000;
 
 const Users = require("./routes/user.js");
 const Posts = require("./routes/post.js");
+const cookieParser = require("cookie-parser");
 
 app.use("/users", Users);
 app.use("/posts", Posts);
-
+app.use(cookieParser( ));
 
 
 app.get("/getcookies", (req, res) => {
