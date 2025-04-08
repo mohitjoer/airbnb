@@ -4,24 +4,23 @@ const router = express.Router();
 
 
 
-
 //index 
-router.get("/users", (req, res) => {
+router.get("/", (req, res) => {
    
 });
 
 //show
-router.get("/users/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   
 });
 
 //create
-router.post("/users", (req, res) => {
+router.post("/", (req, res) => {
     
 });
 
 //delete
-router.delete("/users/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     
 });
 

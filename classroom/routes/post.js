@@ -1,21 +1,27 @@
 //posts
+const express = require("express");
+const router = express.Router();
+
 
 //index 
-app.get("/posts", (req, res) => {
+router.get("/", (req, res) => {
    
 });
 
 //show
-app.get("/posts/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   
 });
 
 //create
-app.post("/posts", (req, res) => {
+router.post("/", (req, res) => {
     
 });
 
 //delete
-app.delete("/posts/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     
 });
+
+
+module.exports = router;
