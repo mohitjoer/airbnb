@@ -17,7 +17,7 @@ const validateReview = (req, res, next) => {
     }
 };
 
-// Add a review
+// Add review
 router.post('/', validateReview, wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -34,7 +34,7 @@ router.post('/', validateReview, wrapAsync(async (req, res, next) => {
     res.redirect(`/listings/${id}`);
 }));
 
-// Delete a review
+// Delete review
 router.delete('/:reviewId', wrapAsync(async (req, res, next) => {
     const { id, reviewId } = req.params;
     await listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
