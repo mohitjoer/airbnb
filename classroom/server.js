@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 
 app.use("/users", Users);
 app.use("/posts", Posts);
-app.use(cookieParser( ));
+app.use(cookieParser());
 
 
 app.get("/getcookies", (req, res) => {
