@@ -8,6 +8,8 @@ const Users = require("./routes/user.js");
 const Posts = require("./routes/post.js");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const flash = require("connect-flash");
+
 
 const sessionoptions = {secret : "mysupersecretstring",resave : false, saveUninitialized : true};
 
