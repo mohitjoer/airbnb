@@ -23,16 +23,24 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
 app.use(flash());
 
 app.get("/register", (req, res) => {
     let { name = "mohit" } = req.query;
     req.session.name = name;
-    req.flash("success", "User registered successfully");
+    
+    if (name === "anonymous") {
+        req.flash("error", "user not registered");
+    }else  {
+        req.flash("success", "User registered successfully");
+    }
     res.redirect("/hello");
 });
 
 app.get("/hello", (req, res) => {
+    res.locals.successmsg = req.flash("success");
+    res.locals.errormsg = req.flash("error");
     res.render("page.ejs", { name: req.session.name });
 });
 
