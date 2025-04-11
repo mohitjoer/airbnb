@@ -3,7 +3,6 @@ const app = express();
 const PORT = 3000;  
 
 
-
 const Users = require("./routes/user.js");
 const Posts = require("./routes/post.js");
 const cookieParser = require("cookie-parser");
